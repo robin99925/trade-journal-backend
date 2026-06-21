@@ -6,20 +6,15 @@ const routes = require("./routes");
 const app = express();
 
 // app.use(cors());
-const allowedOrigins = ["http://localhost:5173", "https://your-app.vercel.app"];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://trade-journal-nu-tawny.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   }),
 );
+
+app.options("*", cors());
 app.use(express.json());
 
 // Health Check Route
