@@ -6,12 +6,17 @@ const routes = require("./routes");
 const app = express();
 
 // app.use(cors());
+const allowedOrigins = ["http://localhost:5000", "https://your-app.vercel.app"];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://your-frontend-domain.vercel.app",
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
